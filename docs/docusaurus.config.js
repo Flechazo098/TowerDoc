@@ -8,7 +8,7 @@ const katex = require('rehype-katex');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Tower Library',
-  tagline: '教程, 开源, 免费, 示例, Tutorial',
+  tagline: '',
   url: 'https://doc.sighs.cc',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -77,51 +77,13 @@ const config = {
       },
 	  zoomSelector: '.markdown img',
 	  metadata: [
-		{name: 'keywords', content: 'LabVIEW, 编程, 经验, 教程, 开源, 免费, 电子书, 下载, PDF, 示例, Tutorial'},
-		{name: 'description', content: '《我和LabVIEW:一个NI工程师的十年编程经验》，是一本广受好评的的畅销书。介绍了各种控件，节点，结构的使用方法和编程模式，调试优化等高级功能。'},
-		{name: 'author', content: 'Qizhen Ruan 阮奇桢'},
+		{name: 'keywords', content: ''},
+		{name: 'description', content: ''},
+		{name: 'author', content: ''},
 	  ],
     }
   ),
   plugins: [
-    function baiduPlugin(context, options) {
-      return {
-        name: 'baidu-plugin',
-        injectHtmlTags({content}) {
-		  return {
-			postBodyTags: [`
-               <script type="text/javascript" src="https://hm.baidu.com/hm.js?b3f6e7ec9302021671173e3fad14f4cd"></script>
-               <script type="text/javascript">
-                 (function(c,l,a,r,i,t,y){
-                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                 })(window, document, "clarity", "script", "jxmn1qjx88");
-               </script>
-                        `],
-		  };
-		},
-      };
-    },
-    function googleSiteName(context, options) {
-      return {
-        name: 'googleSiteName-plugin',
-        injectHtmlTags({content}) {
-		  return {
-			headTags: [`
-                <script type="application/ld+json">
-                {
-                  "@context" : "https://schema.org",
-                  "@type" : "WebSite",
-                  "name" : "LabVIEW Tutorial",
-                  "url" : "https://lv.qizhen.xyz"
-                }
-                </script>
-                        `],
-		  };
-		},
-      };
-    },
 	[
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
