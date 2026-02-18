@@ -75,12 +75,7 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
       },
-	  zoomSelector: '.markdown img',
-	  metadata: [
-		{name: 'keywords', content: ''},
-		{name: 'description', content: ''},
-		{name: 'author', content: ''},
-	  ],
+	  zoomSelector: '.markdown img'
     }
   ),
   plugins: [
