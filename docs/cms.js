@@ -195,14 +195,21 @@ function writeDocument(document, categoryIndexes) {
 function createDocumentSource(document, categoryIndexes) {
     const metadata = getDocumentMetadata(document);
     const isCategoryIndex = Object.hasOwn(categoryIndexes, metadata.logicalPath);
+    const permalink = getDocumentPermalink(metadata, categoryIndexes);
+    const hasCustomPermalink = permalink !== metadata.id;
     const source = [];
+
+    if (hasCustomPermalink) {
+        source.push(
+            "---",
+            `slug: ${JSON.stringify(`/${permalink}`)}`,
+            "---",
+            "",
+        );
+    }
 
     if (isCategoryIndex) {
         source.push(
-            "---",
-            `slug: ${JSON.stringify(`/${metadata.logicalPath}`)}`,
-            "---",
-            "",
             "import DocCardList from '@theme/DocCardList';",
             "",
         );
@@ -218,6 +225,35 @@ function createDocumentSource(document, categoryIndexes) {
     }
 
     return `${source.join("\n")}\n`;
+}
+
+function getDocumentPermalink(metadata, categoryIndexes) {
+    if (Object.hasOwn(categoryIndexes, metadata.logicalPath)) {
+        return resolveCategoryPermalink(metadata.logicalPath, categoryIndexes);
+    }
+
+    return [
+        resolveCategoryPermalink(metadata.parentPath, categoryIndexes),
+        metadata.slug,
+    ].filter(Boolean).join("/");
+}
+
+function resolveCategoryPermalink(categoryPath, categoryIndexes) {
+    if (!categoryPath) return "";
+
+    const logicalSegments = categoryPath.split("/");
+    const logicalPath = [];
+    const permalinkSegments = [];
+
+    logicalSegments.forEach(segment => {
+        logicalPath.push(segment);
+        const categoryIndex = categoryIndexes[logicalPath.join("/")];
+        permalinkSegments.push(
+            categoryIndex ? categoryIndex.split("/").at(-1) : segment,
+        );
+    });
+
+    return permalinkSegments.join("/");
 }
 
 function clearDirectorySync(dirPath) {
