@@ -27,6 +27,9 @@ const categories = new Map();
 
 for (const routeKey in Route) {
     const categoryIndex = categoryIndexes[routeKey];
+    const categoryLabel = Object.hasOwn(langDefault, routeKey)
+        ? langDefault[routeKey]
+        : routeKey.split("/").at(-1);
     const category = {
         type: "category",
         items: [...Route[routeKey]],
@@ -39,7 +42,7 @@ for (const routeKey in Route) {
                 type: "generated-index",
                 slug: `/${routeKey}`,
             },
-        label: routeKey in langDefault ? langDefault[routeKey] : routeKey,
+        label: categoryLabel,
     };
 
     categories.set(routeKey, category);
